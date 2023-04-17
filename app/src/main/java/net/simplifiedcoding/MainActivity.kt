@@ -3,6 +3,7 @@ package net.simplifiedcoding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.annotation.IdRes
 import com.google.mlkit.vision.barcode.common.Barcode
 import net.simplifiedcoding.databinding.ActivityMainBinding
 
@@ -10,10 +11,11 @@ class MainActivity : AppCompatActivity() {
 
     private val cameraPermission = android.Manifest.permission.CAMERA
     private lateinit var binding: ActivityMainBinding
+    private var action = Action.QR_SCANNER
 
     private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
         if (isGranted) {
-            startScanner()
+            startCamera()
         }
     }
 
@@ -23,15 +25,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonOpenScanner.setOnClickListener {
-            requestCameraAndStartScanner()
+            this.action = Action.QR_SCANNER
+            requestCameraAndStart()
+        }
+
+        binding.buttonFaceDetect.setOnClickListener {
+            this.action = Action.FACE_DETECTION
+            requestCameraAndStart()
         }
     }
 
-    private fun requestCameraAndStartScanner() {
+    private fun requestCameraAndStart() {
         if (isPermissionGranted(cameraPermission)) {
-            startScanner()
+            startCamera()
         } else {
             requestCameraPermission()
+        }
+    }
+
+    private fun startCamera() {
+        when (action) {
+            Action.QR_SCANNER -> startScanner()
+            Action.FACE_DETECTION -> FaceDetectionActivity.startActivity(this)
         }
     }
 
