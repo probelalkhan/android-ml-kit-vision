@@ -3,9 +3,10 @@ package net.simplifiedcoding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts.*
-import androidx.annotation.IdRes
 import com.google.mlkit.vision.barcode.common.Barcode
 import net.simplifiedcoding.databinding.ActivityMainBinding
+import net.simplifiedcoding.facedetector.FaceDetectionActivity
+import net.simplifiedcoding.qrscanner.ScannerActivity
 
 class MainActivity : AppCompatActivity() {
 
