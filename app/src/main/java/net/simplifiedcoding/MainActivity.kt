@@ -14,11 +14,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var action = Action.QR_SCANNER
 
-    private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted ->
-        if (isGranted) {
-            startCamera()
+    private val requestPermissionLauncher =
+        registerForActivityResult(RequestPermission()) { isGranted ->
+            if (isGranted) {
+                startCamera()
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,23 +66,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startScanner() {
-        ScannerActivity.startScanner(this) { barcodes ->
-            barcodes.forEach { barcode ->
-                when (barcode.valueType) {
-                    Barcode.TYPE_URL -> {
-                        binding.textViewQrType.text = "URL"
-                        binding.textViewQrContent.text = barcode.url.toString()
-                    }
-                    Barcode.TYPE_CONTACT_INFO -> {
-                        binding.textViewQrType.text = "Contact"
-                        binding.textViewQrContent.text = barcode.contactInfo.toString()
-                    }
-                    else -> {
-                        binding.textViewQrType.text = "Other"
-                        binding.textViewQrContent.text = barcode.rawValue.toString()
-                    }
-                }
-            }
-        }
+        ScannerActivity.startScanner(this)
     }
 }

@@ -9,66 +9,38 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:background="#DADADA"
         android:orientation="vertical"
-        android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_open_scanner"
+        android:padding="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
+        <Button
+            android:id="@+id/button_open_scanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="QR Type" />
+            android:layout_marginTop="16dp"
+            android:text="Open QR Scanner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <TextView
-            android:id="@+id/text_view_qr_type"
-            style="@style/TextAppearance.AppCompat.Title"
+        <Button
+            android:id="@+id/button_face_detect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="URL" />
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="QR Content" />
-
-        <TextView
-            android:id="@+id/text_view_qr_content"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="content" />
+            android:layout_marginTop="12dp"
+            android:text="Open Face Detection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_open_scanner" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_open_scanner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Open Scanner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <Button
-        android:id="@+id/button_face_detect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open Face Detection"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_open_scanner" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

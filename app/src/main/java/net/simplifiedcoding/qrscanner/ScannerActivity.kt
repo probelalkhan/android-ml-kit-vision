@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -18,6 +19,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import net.simplifiedcoding.CameraXViewModel
 import net.simplifiedcoding.databinding.ActivityScannerBinding
 import java.util.concurrent.Executors
 
@@ -25,28 +27,24 @@ class ScannerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityScannerBinding
     private lateinit var cameraSelector: CameraSelector
-    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var processCameraProvider: ProcessCameraProvider
     private lateinit var cameraPreview: Preview
     private lateinit var imageAnalysis: ImageAnalysis
 
+    private val cameraXViewModel = viewModels<CameraXViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScannerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         cameraSelector =
             CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
-        cameraProviderFuture.addListener(
-            {
-                processCameraProvider = cameraProviderFuture.get()
-                bindCameraPreview()
-                bindInputAnalyser()
-            }, ContextCompat.getMainExecutor(this)
-        )
+        cameraXViewModel.value.processCameraProvider.observe(this) { provider ->
+            processCameraProvider = provider
+            bindCameraPreview()
+            bindInputAnalyser()
+        }
     }
 
     private fun bindCameraPreview() {
@@ -99,9 +97,7 @@ class ScannerActivity : AppCompatActivity() {
         barcodeScanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
                 if (barcodes.isNotEmpty()) {
-                    onScan?.invoke(barcodes)
-                    onScan = null
-                    finish()
+                    showBarcodeInfo(barcodes.first())
                 }
             }
             .addOnFailureListener {
@@ -111,12 +107,27 @@ class ScannerActivity : AppCompatActivity() {
             }
     }
 
+    private fun showBarcodeInfo(barcode: Barcode) {
+        when (barcode.valueType) {
+            Barcode.TYPE_URL -> {
+                binding.textViewQrType.text = "URL"
+                binding.textViewQrContent.text = barcode.rawValue
+            }
+            Barcode.TYPE_CONTACT_INFO -> {
+                binding.textViewQrType.text = "Contact"
+                binding.textViewQrContent.text = barcode.contactInfo.toString()
+            }
+            else -> {
+                binding.textViewQrType.text = "Other"
+                binding.textViewQrContent.text = barcode.rawValue
+            }
+        }
+    }
+
     companion object {
         private val TAG = ScannerActivity::class.simpleName
-        private var onScan: ((barcodes: List<Barcode>) -> Unit)? = null
 
-        fun startScanner(context: Context, onScan: (barcodes: List<Barcode>) -> Unit) {
-            Companion.onScan = onScan
+        fun startScanner(context: Context) {
             Intent(context, ScannerActivity::class.java).also {
                 context.startActivity(it)
             }
