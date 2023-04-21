@@ -1,12 +1,11 @@
-package net.simplifiedcoding
+package net.simplifiedcoding.mlkitsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts.*
-import com.google.mlkit.vision.barcode.common.Barcode
-import net.simplifiedcoding.databinding.ActivityMainBinding
-import net.simplifiedcoding.facedetector.FaceDetectionActivity
-import net.simplifiedcoding.qrscanner.ScannerActivity
+import net.simplifiedcoding.mlkitsample.databinding.ActivityMainBinding
+import net.simplifiedcoding.mlkitsample.facedetector.FaceDetectionActivity
+import net.simplifiedcoding.mlkitsample.qrscanner.ScannerActivity
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package net.simplifiedcoding
+package net.simplifiedcoding.mlkitsample
 
 import android.app.Application
 import androidx.camera.lifecycle.ProcessCameraProvider

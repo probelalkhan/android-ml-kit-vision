@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <net.simplifiedcoding.facedetector.FaceBoxOverlay
+    <net.simplifiedcoding.mlkitsample.facedetector.FaceBoxOverlay
         android:id="@+id/graphic_overlay"
         android:layout_width="0dp"
         android:layout_height="0dp"

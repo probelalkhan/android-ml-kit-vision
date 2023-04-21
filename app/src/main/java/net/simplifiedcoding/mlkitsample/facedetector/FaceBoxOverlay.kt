@@ -1,4 +1,4 @@
-package net.simplifiedcoding.facedetector
+package net.simplifiedcoding.mlkitsample.facedetector
 
 import android.content.Context
 import android.graphics.Canvas

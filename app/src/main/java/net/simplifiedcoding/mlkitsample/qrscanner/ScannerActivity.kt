@@ -1,4 +1,4 @@
-package net.simplifiedcoding.qrscanner
+package net.simplifiedcoding.mlkitsample.qrscanner
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,15 +12,13 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
-import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import net.simplifiedcoding.CameraXViewModel
-import net.simplifiedcoding.databinding.ActivityScannerBinding
+import net.simplifiedcoding.mlkitsample.CameraXViewModel
+import net.simplifiedcoding.mlkitsample.databinding.ActivityScannerBinding
 import java.util.concurrent.Executors
 
 class ScannerActivity : AppCompatActivity() {

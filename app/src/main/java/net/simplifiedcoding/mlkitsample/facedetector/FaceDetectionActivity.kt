@@ -1,4 +1,4 @@
-package net.simplifiedcoding.facedetector
+package net.simplifiedcoding.mlkitsample.facedetector
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,15 +12,12 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.content.ContextCompat
-import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import net.simplifiedcoding.CameraXViewModel
-import net.simplifiedcoding.databinding.ActivityFaceDetectionBinding
-import java.util.concurrent.ExecutionException
+import net.simplifiedcoding.mlkitsample.CameraXViewModel
+import net.simplifiedcoding.mlkitsample.databinding.ActivityFaceDetectionBinding
 import java.util.concurrent.Executors
 
 class FaceDetectionActivity : AppCompatActivity() {
