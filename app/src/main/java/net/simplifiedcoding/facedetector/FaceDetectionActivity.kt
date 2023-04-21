@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -17,6 +18,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import net.simplifiedcoding.CameraXViewModel
 import net.simplifiedcoding.databinding.ActivityFaceDetectionBinding
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
@@ -25,10 +27,11 @@ class FaceDetectionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFaceDetectionBinding
     private lateinit var cameraSelector: CameraSelector
-    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var processCameraProvider: ProcessCameraProvider
     private lateinit var cameraPreview: Preview
     private lateinit var imageAnalysis: ImageAnalysis
+
+    private val cameraXViewModel = viewModels<CameraXViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,23 +39,13 @@ class FaceDetectionActivity : AppCompatActivity() {
         binding = ActivityFaceDetectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraSelector =
             CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build()
-
-        cameraProviderFuture.addListener(
-            {
-                try {
-                    processCameraProvider = cameraProviderFuture.get()
-                    bindCameraPreview()
-                    bindInputAnalyser()
-                } catch (e: ExecutionException) {
-                    Log.e(TAG, "Unhandled exception", e)
-                } catch (e: InterruptedException) {
-                    Log.e(TAG, "Unhandled exception", e)
-                }
-            }, ContextCompat.getMainExecutor(this)
-        )
+        cameraXViewModel.value.processCameraProvider.observe(this) { provider ->
+            processCameraProvider = provider
+            bindCameraPreview()
+            bindInputAnalyser()
+        }
     }
 
     private fun bindCameraPreview() {
