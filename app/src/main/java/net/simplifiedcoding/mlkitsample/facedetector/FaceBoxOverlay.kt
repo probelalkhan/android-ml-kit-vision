@@ -20,24 +20,24 @@ open class FaceBoxOverlay(context: Context?, attrs: AttributeSet?) : View(contex
 
         abstract fun draw(canvas: Canvas?)
 
-        fun getBoxRect(width: Float, height: Float, imageRect: Rect): RectF {
-            val scaleX = overlay.width.toFloat() / height
-            val scaleY = overlay.height.toFloat() / width
+        fun getBoxRect(imageRectWidth: Float, imageRectHeight: Float, faceBoundingBox: Rect): RectF {
+            val scaleX = overlay.width.toFloat() / imageRectHeight
+            val scaleY = overlay.height.toFloat() / imageRectWidth
             val scale = scaleX.coerceAtLeast(scaleY)
 
             overlay.mScale = scale
 
-            val offsetX = (overlay.width.toFloat() - ceil(height * scale)) / 2.0f
-            val offsetY = (overlay.height.toFloat() - ceil(width * scale)) / 2.0f
+            val offsetX = (overlay.width.toFloat() - ceil(imageRectHeight * scale)) / 2.0f
+            val offsetY = (overlay.height.toFloat() - ceil(imageRectWidth * scale)) / 2.0f
 
             overlay.mOffsetX = offsetX
             overlay.mOffsetY = offsetY
 
             val mappedBox = RectF().apply {
-                left = imageRect.right * scale + offsetX
-                top = imageRect.top * scale + offsetY
-                right = imageRect.left * scale + offsetX
-                bottom = imageRect.bottom * scale + offsetY
+                left = faceBoundingBox.right * scale + offsetX
+                top = faceBoundingBox.top * scale + offsetY
+                right = faceBoundingBox.left * scale + offsetX
+                bottom = faceBoundingBox.bottom * scale + offsetY
             }
 
             val centerX = overlay.width.toFloat() / 2

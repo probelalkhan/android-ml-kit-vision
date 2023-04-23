@@ -20,9 +20,9 @@ class FaceBox(
 
     override fun draw(canvas: Canvas?) {
         val rect = getBoxRect(
-            width = imageRect.width().toFloat(),
-            height = imageRect.height().toFloat(),
-            imageRect = face.boundingBox
+            imageRectWidth = imageRect.width().toFloat(),
+            imageRectHeight = imageRect.height().toFloat(),
+            faceBoundingBox = face.boundingBox
         )
         canvas?.drawRect(rect, paint)
     }
