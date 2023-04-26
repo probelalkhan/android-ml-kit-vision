@@ -15,17 +15,18 @@
         android:theme="@style/Theme.QRScanner"
         tools:targetApi="31">
         <activity
+            android:name=".FaceMeshDetectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".qrscanner.ScannerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".facedetector.FaceDetectionActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
